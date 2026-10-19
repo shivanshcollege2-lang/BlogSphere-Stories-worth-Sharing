@@ -27,8 +27,10 @@ Verification performed in the target workspace on 2026-10-19. Database integrati
 | Registration/login/logout | Passed in MongoDB integration tests |
 | Create/read/update/delete and search | Passed in MongoDB integration tests |
 | Unauthenticated rejection and ownership checks | Passed: 401 for private access, 403 for another author's update/delete |
-| Git commit/push | GitHub CLI unavailable; repository and permission checks incomplete |
+| Git commit/push | Local commit `23bddf8` is present; no remote is configured and push is blocked because `gh` is unavailable |
 
 ## Remaining prerequisites
 
 To run the app locally, provide a running local MongoDB or hosted MongoDB URI in `.env`; that database has not been tested in this environment. No live deployment URL is available.
+
+GitHub username `shivanshcollege2-lang` was found, but the public repository search returned no `BlogSphere` repository. The GitHub CLI is not installed, so private-repository access, account permissions, repository creation and push could not be verified.
