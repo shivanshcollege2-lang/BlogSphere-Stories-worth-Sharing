@@ -63,6 +63,22 @@ npm run dev --workspace client
 
 The backend will not start serving if MongoDB cannot be reached. The health endpoint is `GET http://localhost:5000/api/health`; it reports `database: "connected"` when ready and returns HTTP 503 while disconnected.
 
+In VS Code, you can start the full-stack demo from **Terminal → Run Task → Run BlogSphere demo** if that task is configured in your workspace. Otherwise, run `npm run dev:demo` from the project root. Open <http://127.0.0.1:5173> after the terminal reports that the API and Vite server are ready. This is the recommended option when you do not have MongoDB configured.
+
+Do not use the Live Server extension to run `client/index.html`: this is a Vite/React application, and Live Server does not compile its JSX or proxy API requests. If opened that way, the page now explains how to start the app. The demo task runs both the frontend and API with temporary demo data.
+
+### Try the local demo without installing MongoDB
+
+The demo starts an in-memory MongoDB instance, creates three sample stories, and binds the API to `127.0.0.1` only:
+
+```powershell
+npm run dev:demo
+```
+
+Sign in with `writer@blogsphere.local` and `BlogSphereDemo123!`, or register a new account. The demo database is temporary: all accounts and posts are erased when you stop the process. It is for local evaluation only and must not be used or exposed in production. The first run may need internet access to download the MongoDB binary used by `mongodb-memory-server`.
+
+To keep data between runs, use the normal `npm run dev` workflow with a local or hosted MongoDB connection in the root `.env` file.
+
 ## Environment variables
 
 | Variable | Required | Description |

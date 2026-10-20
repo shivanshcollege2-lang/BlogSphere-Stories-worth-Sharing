@@ -28,6 +28,14 @@ export function errorHandler(error, _request, response, _next) {
     return response.status(409).json({ success: false, error: { message: 'An account with this email already exists.' } });
   }
 
+  if (error?.name === 'MongooseServerSelectionError' || error?.name === 'MongoServerSelectionError') {
+    console.error(`Database request failed: ${error.name}`);
+    return response.status(503).json({
+      success: false,
+      error: { message: 'The database is unavailable. Check MONGODB_URI and make sure MongoDB is running.' }
+    });
+  }
+
   console.error(error);
   return response.status(500).json({ success: false, error: { message: 'Something went wrong. Please try again.' } });
 }

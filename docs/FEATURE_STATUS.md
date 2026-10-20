@@ -10,6 +10,7 @@
 - [x] MongoDB/Mongoose user and post models, validation and timestamps.
 - [x] API error handling, security headers, CORS policy and authentication rate limiting.
 - [x] Loading, empty and error states, form constraints, toast messages and deletion confirmation.
+- [x] Local-only, in-memory demonstration mode with three sample stories and demo account.
 - [x] README, environment template, ignore rules and automated unit tests.
 
 ## Verification results
@@ -27,10 +28,10 @@ Verification performed in the target workspace on 2026-10-19. Database integrati
 | Registration/login/logout | Passed in MongoDB integration tests |
 | Create/read/update/delete and search | Passed in MongoDB integration tests |
 | Unauthenticated rejection and ownership checks | Passed: 401 for private access, 403 for another author's update/delete |
-| Git commit/push | Local commit `23bddf8` is present; no remote is configured and push is blocked because `gh` is unavailable |
+| GitHub upload | Not attempted, as requested. |
 
 ## Remaining prerequisites
 
-To run the app locally, provide a running local MongoDB or hosted MongoDB URI in `.env`; that database has not been tested in this environment. No live deployment URL is available.
+For a no-install interactive preview, run `npm run dev:demo` and use the demo account in the README. Its database is temporary and resets on shutdown. For persistent data, provide a running local MongoDB or hosted MongoDB URI in the root `.env`; that separate database has not been tested here. No live deployment URL is available.
 
 GitHub username `shivanshcollege2-lang` was found, but the public repository search returned no `BlogSphere` repository. The GitHub CLI is not installed, so private-repository access, account permissions, repository creation and push could not be verified.

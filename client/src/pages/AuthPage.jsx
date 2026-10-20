@@ -56,7 +56,7 @@ export default function AuthPage({ mode }) {
             <button className="button button-primary button-wide" disabled={submitting}>{submitting ? 'One moment…' : isRegister ? <><Feather size={16} /> Create your account</> : 'Sign in to BlogSphere'}</button>
           </form>
           <p className="auth-switch">{isRegister ? 'Already have an account?' : 'New to BlogSphere?'} <Link to={isRegister ? '/login' : '/register'}>{isRegister ? 'Sign in' : 'Create an account'}</Link></p>
-          <p className="auth-terms">By continuing, you agree to keep this a thoughtful, respectful space for everyone.</p>
+          <p className="auth-terms">{!isRegister && <>For the local demo, sign-in details are in the README’s “Try the local demo” section. </>}By continuing, you agree to keep this a thoughtful, respectful space for everyone.</p>
         </div>
       </div>
     </section>

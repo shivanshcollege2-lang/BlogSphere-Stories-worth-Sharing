@@ -5,8 +5,9 @@ const environmentSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   MONGODB_URI: z.string().min(1, 'MONGODB_URI is required'),
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
-  CLIENT_ORIGIN: z.string().url().default('http://localhost:5173'),
-  COOKIE_SECURE: z.enum(['true', 'false']).optional()
+  CLIENT_ORIGIN: z.string().url().default('http://127.0.0.1:5173'),
+  COOKIE_SECURE: z.enum(['true', 'false']).optional(),
+  DEMO_MODE: z.enum(['true', 'false']).default('false')
 });
 
 export function loadConfig(environment = process.env) {
@@ -20,6 +21,7 @@ export function loadConfig(environment = process.env) {
     ...result.data,
     COOKIE_SECURE: result.data.COOKIE_SECURE === undefined
       ? result.data.NODE_ENV === 'production'
-      : result.data.COOKIE_SECURE === 'true'
+      : result.data.COOKIE_SECURE === 'true',
+    DEMO_MODE: result.data.DEMO_MODE === 'true'
   };
 }

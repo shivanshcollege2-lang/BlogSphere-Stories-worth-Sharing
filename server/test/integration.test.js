@@ -7,6 +7,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { createApp } from '../src/app.js';
 import BlogPost from '../src/models/BlogPost.js';
 import User from '../src/models/User.js';
+import { DEMO_CREDENTIALS, seedDemoData } from '../src/demoContent.js';
 
 const config = {
   JWT_SECRET: 'a-test-secret-that-is-long-enough-for-the-application',
@@ -38,12 +39,22 @@ test('starts the HTTP API and reports its live MongoDB connection', async () => 
     assert.equal(response.status, 200);
     assert.deepEqual(await response.json(), {
       success: true,
-      data: { status: 'ok', database: 'connected' }
+      data: { status: 'ok', database: 'connected', demo: false }
     });
   } finally {
     server.close();
     await once(server, 'close');
   }
+});
+
+test('seeds an idempotent demo writer and three readable stories', async () => {
+  const first = await seedDemoData();
+  const second = await seedDemoData();
+  assert.equal(first.author.email, DEMO_CREDENTIALS.email);
+  assert.equal(first.postCount, 3);
+  assert.equal(second.postCount, 3);
+  assert.equal(await User.countDocuments({ email: DEMO_CREDENTIALS.email }), 1);
+  assert.equal(await BlogPost.countDocuments({ author: first.author.id }), 3);
 });
 
 async function register(name, email) {

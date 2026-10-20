@@ -34,6 +34,14 @@ test('rejects state-changing browser requests from an untrusted origin', async (
   assert.equal(response.body.success, false);
 });
 
+test('allows the localhost development origin used by the Vite preview', async () => {
+  const response = await request(app)
+    .post('/api/auth/logout')
+    .set('Origin', 'http://localhost:5173');
+  assert.equal(response.status, 200);
+  assert.equal(response.headers['access-control-allow-origin'], 'http://localhost:5173');
+});
+
 test('returns a consistent not-found response for unknown API routes', async () => {
   const response = await request(app).get('/api/no-such-route');
   assert.equal(response.status, 404);
@@ -43,5 +51,9 @@ test('returns a consistent not-found response for unknown API routes', async () 
 test('reports an unavailable database as degraded health', async () => {
   const response = await request(app).get('/api/health');
   assert.equal(response.status, 503);
-  assert.deepEqual(response.body.data, { status: 'degraded', database: 'disconnected' });
+  assert.deepEqual(response.body.data, {
+    status: 'degraded',
+    database: 'disconnected',
+    demo: false
+  });
 });

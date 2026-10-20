@@ -18,6 +18,9 @@ export async function api(path, options = {}) {
 
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
+    if (response.status >= 500 && !payload?.error?.message) {
+      throw new Error('The BlogSphere API is unavailable. Start the backend and check its MongoDB configuration.');
+    }
     throw new Error(payload?.error?.message || `Request failed with status ${response.status}.`);
   }
   return payload?.data;
